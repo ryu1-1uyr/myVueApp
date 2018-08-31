@@ -49,6 +49,10 @@
       <p>特攻:{{pokeC}}, 特防:{{pokeD}}, 素早さ:{{pokeS}}</p>
       <img :src="`${this.img}`" >
       <img :src="`${this.img_b}`">
+      <graph-sample
+        :data1="data1"
+        :data2="data2"
+      />
 
     </div>
 
@@ -58,12 +62,29 @@
 <script>
   import myheader from './components/myheader'
   import Pokemon from 'pokemon'
+  import { Radar } from 'vue-chartjs'
 
   const url = "https://pokeapi.co/api/v2/pokemon/";
 
   export default {
+    extends: Radar,
+    mounted () {
+      // Overwriting base render method with actual data.
+      this.renderChart({
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+          {
+            label: 'GitHub Commits',
+            backgroundColor: '#f87979',
+            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+          }
+        ]
+      })
+    },
+
     components: {
       myheader ,
+      GraphSample: Radar
 
     },
     data () {
@@ -78,7 +99,13 @@
         pokeA:'',
         pokeH:'',
         img:'',
-        img_b:''
+        img_b:'',
+        function() {
+          return {
+            data1: 40,
+            data2: 80,
+          }
+        }
       }
     },
     methods: {
