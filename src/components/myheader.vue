@@ -1,5 +1,5 @@
 <template>
   <div>
-    ここはヘッダーです。
+    ポケモン図鑑。
   </div>
 </template>

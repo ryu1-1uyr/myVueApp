@@ -40,29 +40,34 @@
       no text
     </p>
     <input type="text" v-model="msg">
-    <button @click="clear()">clear</button>
+    <button @click="search()">search</button>
     <button @click="keep()">keep</button>
     <button @click="put()">put</button>
+    <button @click="getRandomPokemon()">random</button>
     <p>{{keepmsg}}</p>
+
+
+
   </div>
 </template>
 
 <script>
   import myheader from './components/myheader'
-
+  import Pokemon from 'pokemon'
 
   export default {
     components: {
-      myheader
+      myheader ,
+
     },
     data () {
       return {
-        msg: 'Hello World!',
+        msg: Pokemon.random('ja'),
         keepmsg: ''
       }
     },
     methods: {
-      clear () {
+      search () { // フェッチなどを実装するとこ
         this.msg = ''
       },
       keep () {
@@ -70,6 +75,9 @@
       },
       put () {
         this.msg = this.keepmsg
+      },
+      getRandomPokemon (){
+        this.msg = Pokemon.random('ja');
       }
     }
   }
