@@ -41,16 +41,15 @@
     </p>
     <input type="text" v-model="msg">
     <button @click="search()">search</button>
-    <button @click="keep()">keep</button>
-    <button @click="put()">put</button>
     <button @click="getRandomPokemon()">random</button>
     <p>{{keepmsg}}</p>
 
     <div>
       <p>体力:{{pokeH}}, 攻撃:{{pokeA}}, 防御:{{pokeB}}</p>
       <p>特攻:{{pokeC}}, 特防:{{pokeD}}, 素早さ:{{pokeS}}</p>
-      <img src="" alt="">
-      <img src="" alt="">
+      <img :src="`${this.img}`" >
+      <img :src="`${this.img_b}`">
+
     </div>
 
   </div>
