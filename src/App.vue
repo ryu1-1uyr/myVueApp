@@ -46,7 +46,12 @@
     <button @click="getRandomPokemon()">random</button>
     <p>{{keepmsg}}</p>
 
-
+    <div>
+      <p>体力:{{pokeH}}, 攻撃:{{pokeA}}, 防御:{{pokeB}}</p>
+      <p>特攻:{{pokeC}}, 特防:{{pokeD}}, 素早さ:{{pokeS}}</p>
+      <img src="" alt="">
+      <img src="" alt="">
+    </div>
 
   </div>
 </template>
@@ -54,6 +59,8 @@
 <script>
   import myheader from './components/myheader'
   import Pokemon from 'pokemon'
+
+  const url = "https://pokeapi.co/api/v2/pokemon/";
 
   export default {
     components: {
@@ -63,12 +70,39 @@
     data () {
       return {
         msg: Pokemon.random('ja'),
-        keepmsg: ''
+        keepmsg: '',
+        pokeid:'',
+        pokeS:'',
+        pokeD:'',
+        pokeC:'',
+        pokeB:'',
+        pokeA:'',
+        pokeH:'',
+        img:'',
+        img_b:''
       }
     },
     methods: {
       search () { // フェッチなどを実装するとこ
-        this.msg = ''
+        let pokeId = Pokemon.getId(this.msg,'ja');
+        fetch("https://pokeapi.co/api/v2/pokemon/"+pokeId)
+          .then((response) => response.json())
+          .then((json) => {
+            this.pokeS = json["stats"][0]["base_stat"];
+            this.pokeD = json["stats"][1]["base_stat"];
+            this.pokeC = json["stats"][2]["base_stat"];
+            this.pokeB = json["stats"][3]["base_stat"];
+            this.pokeA = json["stats"][4]["base_stat"];
+            this.pokeH = json["stats"][5]["base_stat"];
+
+            fetch(json["forms"][0]["url"])
+              .then((response2)=> response2.json())
+              .then((json2) => {
+                this.img = json2["sprites"]["front_default"];
+                this.img_b = json2["sprites"]["back_default"];
+              })
+            })
+
       },
       keep () {
         this.keepmsg = this.msg
